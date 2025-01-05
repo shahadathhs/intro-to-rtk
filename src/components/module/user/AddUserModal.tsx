@@ -1,4 +1,8 @@
-import { Button } from "@/components/ui/button";
+import { DialogDescription } from '@radix-ui/react-dialog';
+import { PlusIcon } from 'lucide-react';
+import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
+
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -6,21 +10,18 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
+} from '@/components/ui/dialog';
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { addUser } from "@/redux/features/user/userSlice";
-import { useAppDispatch } from "@/redux/hook";
-import { IUser } from "@/types/user.types";
-import { DialogDescription } from "@radix-ui/react-dialog";
-import { PlusIcon } from "lucide-react";
-import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { addUser } from '@/redux/features/user/userSlice';
+import { useAppDispatch } from '@/redux/hook';
+import { IUser } from '@/types/user.types';
 
 export function AddUserModal() {
   const form = useForm();
@@ -34,8 +35,9 @@ export function AddUserModal() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button>Add User
-            <PlusIcon />
+        <Button>
+          Add User
+          <PlusIcon />
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
@@ -54,7 +56,7 @@ export function AddUserModal() {
                 <FormItem>
                   <FormLabel>Name</FormLabel>
                   <FormControl>
-                    <Input {...field} value={field.value || ""} />
+                    <Input {...field} value={field.value || ''} />
                   </FormControl>
                 </FormItem>
               )}

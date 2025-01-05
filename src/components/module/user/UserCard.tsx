@@ -1,11 +1,12 @@
-import { Button } from "@/components/ui/button";
-import { deleteUser } from "@/redux/features/user/userSlice";
-import { useAppDispatch } from "@/redux/hook";
-import { IUser } from "@/types/user.types";
-import { Trash2 } from "lucide-react";
+import { Trash2 } from 'lucide-react';
+
+import { Button } from '@/components/ui/button';
+import { deleteUser } from '@/redux/features/user/userSlice';
+import { useAppDispatch } from '@/redux/hook';
+import { IUser } from '@/types/user.types';
 
 interface IProps {
-  user: IUser
+  user: IUser;
 }
 
 export default function UserCard({ user }: IProps) {
@@ -17,7 +18,7 @@ export default function UserCard({ user }: IProps) {
         <p className="font-semibold">{user.name}</p>
         <div className="flex gap-3 items-center">
           <Button
-            variant={"link"}
+            variant={'link'}
             className="p-0 text-red-500"
             onClick={() => dispatch(deleteUser(user.id))}
           >

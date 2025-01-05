@@ -1,5 +1,6 @@
-import { Link } from "react-router-dom";
-import { ModeToggle } from "../mode-toggle";
+import { Link } from 'react-router-dom';
+
+import { ModeToggle } from '../mode-toggle';
 
 export default function Navbar() {
   return (
@@ -7,8 +8,8 @@ export default function Navbar() {
       <div className="flex items-center">
         <span className="font-bold ml-2">Task Logo</span>
       </div>
-      <Link to={"/"}>Task</Link>
-      <Link to={"/users"}>Users</Link>
+      <Link to={'/'}>Task</Link>
+      <Link to={'/users'}>Users</Link>
       <div>
         <ModeToggle />
       </div>

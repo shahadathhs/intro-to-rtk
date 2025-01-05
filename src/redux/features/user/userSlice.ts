@@ -1,6 +1,7 @@
-import { RootState } from "@/redux/store";
-import { IUser } from "@/types/user.types";
-import { createSlice, nanoid, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, nanoid, PayloadAction } from '@reduxjs/toolkit';
+
+import { RootState } from '@/redux/store';
+import { IUser } from '@/types/user.types';
 
 interface InitialState {
   users: IUser[];
@@ -9,17 +10,17 @@ interface InitialState {
 const initialState: InitialState = {
   users: [
     {
-      id: "111",
-      name: "Rakib",
+      id: '111',
+      name: 'Rakib',
     },
     {
-      id: "112",
-      name: "Rose",
+      id: '112',
+      name: 'Rose',
     },
   ],
 };
 
-type DraftUser = Pick<IUser, "name">;
+type DraftUser = Pick<IUser, 'name'>;
 
 const createUser = (userData: DraftUser): IUser => {
   return {
@@ -29,7 +30,7 @@ const createUser = (userData: DraftUser): IUser => {
 };
 
 const userSlice = createSlice({
-  name: "user",
+  name: 'user',
   initialState,
   reducers: {
     addUser: (state, action: PayloadAction<DraftUser>) => {

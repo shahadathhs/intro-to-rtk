@@ -1,31 +1,33 @@
-import { RootState } from "@/redux/store";
-import { ITask } from "@/types/task.types";
-import { createSlice, PayloadAction, nanoid } from "@reduxjs/toolkit";
-import { deleteUser } from "../user/userSlice";
+import { createSlice, PayloadAction, nanoid } from '@reduxjs/toolkit';
+
+import { deleteUser } from '../user/userSlice';
+
+import { RootState } from '@/redux/store';
+import { ITask } from '@/types/task.types';
 
 interface InitialState {
   tasks: ITask[];
-  filter: "All" | "High" | "Medium" | "Low";
+  filter: 'All' | 'High' | 'Medium' | 'Low';
 }
 
 const initialState: InitialState = {
   tasks: [
     {
-      id: "aaaa",
-      title: "Machine Learning",
-      description: "Learn basics of machine learning in 30 days",
+      id: 'aaaa',
+      title: 'Machine Learning',
+      description: 'Learn basics of machine learning in 30 days',
       isCompleted: false,
-      priority: "High",
+      priority: 'High',
       assignedTo: null,
-      dueDate: "2025-03-14",
+      dueDate: '2025-03-14',
     },
   ],
-  filter: "All",
+  filter: 'All',
 };
 
 type DraftTask = Pick<
   ITask,
-  "title" | "description" | "dueDate" | "priority" | "assignedTo"
+  'title' | 'description' | 'dueDate' | 'priority' | 'assignedTo'
 >;
 
 const createTask = (taskData: DraftTask): ITask => {
@@ -38,7 +40,7 @@ const createTask = (taskData: DraftTask): ITask => {
 };
 
 const taskSlice = createSlice({
-  name: "task",
+  name: 'task',
   initialState,
   reducers: {
     addTask: (state, action: PayloadAction<DraftTask>) => {
@@ -51,7 +53,7 @@ const taskSlice = createSlice({
       state.tasks.forEach((task) =>
         task.id === action.payload
           ? (task.isCompleted = !task.isCompleted)
-          : task
+          : task,
       );
     },
 
@@ -62,7 +64,7 @@ const taskSlice = createSlice({
 
     updateFilter: (
       state,
-      action: PayloadAction<"Low" | "Medium" | "High" | "All">
+      action: PayloadAction<'Low' | 'Medium' | 'High' | 'All'>,
     ) => {
       state.filter = action.payload;
     },
@@ -70,7 +72,7 @@ const taskSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(deleteUser, (state, action) => {
       state.tasks.forEach((task) =>
-        task.assignedTo === action.payload ? (task.assignedTo = null) : task
+        task.assignedTo === action.payload ? (task.assignedTo = null) : task,
       );
     });
   },
@@ -79,12 +81,12 @@ const taskSlice = createSlice({
 export const selectTasks = (state: RootState) => {
   const filter = state.todo.filter;
 
-  if (filter === "Low") {
-    return state.todo.tasks.filter((task) => task.priority === "Low");
-  } else if (filter === "Medium") {
-    return state.todo.tasks.filter((task) => task.priority === "Medium");
-  } else if (filter === "High") {
-    return state.todo.tasks.filter((task) => task.priority === "High");
+  if (filter === 'Low') {
+    return state.todo.tasks.filter((task) => task.priority === 'Low');
+  } else if (filter === 'Medium') {
+    return state.todo.tasks.filter((task) => task.priority === 'Medium');
+  } else if (filter === 'High') {
+    return state.todo.tasks.filter((task) => task.priority === 'High');
   } else {
     return state.todo.tasks;
   }
