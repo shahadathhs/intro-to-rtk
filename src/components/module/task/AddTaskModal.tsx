@@ -36,26 +36,33 @@ import {
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { cn } from '@/lib/utils';
-import { addTask } from '@/redux/features/task/taskSlice';
+import { useCreateTaskMutation } from '@/redux/api/baseApi';
+// import { addTask } from '@/redux/features/task/taskSlice';
 import { selectUsers } from '@/redux/features/user/userSlice';
-import { useAppDispatch, useAppSelector } from '@/redux/hook';
+import { useAppSelector } from '@/redux/hook';
 import { ITask } from '@/types/task.types';
+import { IUser } from '@/types/user.types';
 
 export function AddTaskModal() {
   const [open, setOpen] = useState(false);
+  const form = useForm();
 
   const users = useAppSelector(selectUsers);
   console.log(users);
-  const form = useForm();
 
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
+  const [createTask, { data }] = useCreateTaskMutation();
+  console.log(data);
 
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+  const onSubmit: SubmitHandler<FieldValues> = async(data) => {
     const serializedData = {
       ...data,
       dueDate: data.dueDate ? data.dueDate.toISOString() : null,
     };
-    dispatch(addTask(serializedData as ITask));
+    // dispatch(addTask(serializedData as ITask));
+    const response = await createTask(serializedData as ITask).unwrap();
+
+    console.log(response);
     setOpen(false);
     form.reset();
   };
@@ -105,8 +112,7 @@ export function AddTaskModal() {
                   <FormLabel>Priority</FormLabel>
                   <Select
                     onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
+                    defaultValue={field.value}>
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Select priority" />
@@ -130,15 +136,14 @@ export function AddTaskModal() {
                   <FormLabel>Assign to</FormLabel>
                   <Select
                     onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
+                    defaultValue={field.value}>
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Select priority" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {users.map((user) => (
+                      {users?.map((user: IUser) => (
                         <SelectItem key={user.id} value={user.id}>
                           {user.name}
                         </SelectItem>
@@ -163,8 +168,7 @@ export function AddTaskModal() {
                           className={cn(
                             'pl-3 text-left font-normal',
                             !field.value && 'text-muted-foreground',
-                          )}
-                        >
+                          )}>
                           {field.value ? (
                             format(field.value, 'PPP')
                           ) : (
